@@ -1,0 +1,63 @@
+********************	MOTOR	********************
+motor.h
+	//左轮
+	#define PWMA1   TIM4->CCR1  
+	#define PWMA2   TIM4->CCR2 
+	//右轮
+	#define PWMB1   TIM4->CCR3  
+	#define PWMB2   TIM4->CCR4	
+****************************************************
+********************	SERVO	********************	
+servo.h
+	#define SERVO TIM1->CCR4					//使用TIM1的捕获/比较寄存器，来产生PWM
+
+sys.h
+	#define SERVO_INIT 1500	
+****************************************************
+********************	ENCODER	********************	
+encoder.h
+	#define ENCODER_TIM_PERIOD (u16)(65535)   	//不可大于65535 因为F103的定时器是16位的。
+	
+main.c	
+	int Encoder_Left,Encoder_Right;             //左右编码器的脉冲计数
+	
+sys.h
+	extern int Encoder_Left,Encoder_Right;      //左右编码器的脉冲计数
+****************************************************
+********************	KEY		********************
+key.h
+	#define KEY PAin(5)
+sys.h
+	#define FTIR   1  //下降沿触发
+	#define RTIR   2  //上升沿触发
+****************************************************
+********************	CONTROL	********************
+main.c
+	u8 Flag_Mode=0;				//模式标志，0-测距模式，1-驾驶模式	//没用这个了
+	u8 Flag_direction,Flag_Last_direction;
+	float Velocity_KP=12,Velocity_KI=12;	       //速度控制PID参数
+	float Distance_KP=12,Distance_KI=12,Distance_KD=1;
+	int Motor_A,Motor_B,Servo;		//速度闭环控制计算电机A、B、舵机的最终发出的PWM
+	int Target_A,Target_B	;				//电机A、B应该达到的PWM目标
+	int U_Distance;							//计算出来的超声波测距
+	int	Distance;								//实际地面距离
+sys.h
+	extern u8 Flag_Mode;
+	extern u8 Flag_direction,Flag_Last_direction;
+	extern float Velocity_KP,Velocity_KI;	       //速度控制PID参数
+	extern float Distance_KP,Distance_KI,Distance_KD;
+	extern int Motor_A,Motor_B,Servo;		//速度闭环控制计算电机A、B、舵机的最终发出的PWM
+	extern int Target_A,Target_B	;				//电机A、B应该达到的PWM目标
+control.h
+	#define PI 3.14159265
+	#define ZHONGZHI 0
+	#define T 0.156f
+	#define L 0.1445f
+	#define K 622.8f
+****************************************************
+
+
+	
+	
+	
+	

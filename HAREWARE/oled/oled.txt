@@ -1,0 +1,33 @@
+
+使用单色0.96英寸的OLED屏模块
+
+
+本工程购买的oled屏，有7个引脚，通讯方式为	4线SPI
+
+GND：	接地
+VCC:	电源
+
+SCL:	时钟	---------------------	PB.5
+SDA:	数据	---------------------	PB.4
+RES:	硬件复位（有的也叫RTS)	-----	PB.3
+DC:		命令/数据 标志	-------------	PA.15
+
+该屏幕模块已经集成了一个驱动芯片SSD1306
+主要是通过操纵SSD1306来控制显示
+
+对该模块的初始化，直接使用厂家提供的代码：
+void OLED_WR_Byte(u8 dat,u8 cmd);	    
+void OLED_Display_On(void);
+void OLED_Display_Off(void);
+void OLED_Refresh_Gram(void);		   				   		    
+void OLED_Init(void);
+void OLED_Clear(void);
+void OLED_DrawPoint(u8 x,u8 y,u8 t);
+void OLED_ShowChar(u8 x,u8 y,u8 chr,u8 size,u8 mode);
+void OLED_ShowNumber(u8 x,u8 y,u32 num,u8 len,u8 size);
+void OLED_ShowString(u8 x,u8 y,const u8 *p);	
+
+其中，唯一需要改动的是	void OLED_Init(void);
+
+这个函数的固定内容，是厂家推荐的初始化序列代码，
+在厂家推荐初始化序列之前，添加 IO口初始化代码 即可；
